@@ -1,4 +1,5 @@
 # dependencies
+dist/
 node_modules/
 
 # IDE
@@ -33,3 +34,7 @@ yarn-error.log
 /packages/graphql
 /benchmarks/memory
 build/config\.gypi
+
+.env
+.env.local
+.development.env
