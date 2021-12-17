@@ -11,21 +11,18 @@ export class QuotesService {
 
   async getAllQuotes() {
     return {
-      message: 'success',
       results: await this.model.find().exec(),
     };
   }
 
   async getQuoteById(id: string) {
     return {
-      message: 'success',
       results: await this.model.findById(id).exec(),
     };
   }
 
   async createQuote(quote: QuoteCreateDto) {
     return {
-      message: 'success',
       results: await new this.model({ ...quote, _id: quote.id, createdAt: new Date() }).save(),
     };
   }
@@ -33,23 +30,19 @@ export class QuotesService {
   async updateQuoteById(id: string, updatedQuote: QuoteUpdateDto) {
     this.model.updateOne({ _id: id }, { ...updatedQuote, updatedAt: new Date() }).exec();
     return {
-      message: 'success',
       results: await this.model.findOne({ _id: id }),
     };
   }
 
   async deleteQuoteById(id: string) {
     return {
-      message: 'success',
       results: await this.model.deleteOne({ _id: id }).exec(),
     };
   }
 
   async deleteMenyQuotes(ids: string[]) {
     ids.forEach((id) => this.model.deleteOne({ _id: id }).exec());
-
     return {
-      message: 'success',
       results: await this.model.find().exec(),
     };
   }
