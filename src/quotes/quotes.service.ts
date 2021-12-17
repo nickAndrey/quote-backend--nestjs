@@ -26,16 +26,15 @@ export class QuotesService {
   async createQuote(quote: QuoteCreateDto) {
     return {
       message: 'success',
-      results: await new this.model({ ...quote, createdAt: new Date() }).save(),
+      results: await new this.model({ ...quote, _id: quote.id, createdAt: new Date() }).save(),
     };
   }
 
   async updateQuoteById(id: string, updatedQuote: QuoteUpdateDto) {
+    this.model.updateOne({ _id: id }, { ...updatedQuote, updatedAt: new Date() }).exec();
     return {
       message: 'success',
-      results: await this.model
-        .findByIdAndUpdate(id, { ...updatedQuote, updatedAt: new Date() })
-        .exec(),
+      results: await this.model.findOne({ _id: id }),
     };
   }
 
