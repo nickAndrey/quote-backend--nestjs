@@ -7,9 +7,7 @@ import { QuoteDocument, QuoteShemaDefinition } from './shemas/quote.shema';
 
 @Injectable()
 export class QuotesService {
-  constructor(
-    @InjectModel(QuoteShemaDefinition.name) private model: Model<QuoteDocument>,
-  ) {}
+  constructor(@InjectModel(QuoteShemaDefinition.name) private model: Model<QuoteDocument>) {}
 
   async getAllQuotes() {
     return {
@@ -44,7 +42,16 @@ export class QuotesService {
   async deleteQuoteById(id: string) {
     return {
       message: 'success',
-      results: await this.model.findByIdAndDelete(id).exec(),
+      results: await this.model.deleteOne({ _id: id }).exec(),
+    };
+  }
+
+  async deleteMenyQuotes(ids: string[]) {
+    ids.forEach((id) => this.model.deleteOne({ _id: id }).exec());
+
+    return {
+      message: 'success',
+      results: await this.model.find().exec(),
     };
   }
 }

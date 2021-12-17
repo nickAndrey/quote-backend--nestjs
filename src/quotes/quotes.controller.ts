@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { QuoteCreateDto } from './dto/quote-create.dto';
 import { QuoteUpdateDto } from './dto/quote-update.dto';
 import { QuotesService } from './quotes.service';
@@ -31,15 +23,17 @@ export class QuotesController {
   }
 
   @Put(':id')
-  updateQuoteById(
-    @Param('id') id: string,
-    @Body() updateQuoteBody: QuoteUpdateDto,
-  ) {
+  updateQuoteById(@Param('id') id: string, @Body() updateQuoteBody: QuoteUpdateDto) {
     return this.quotesService.updateQuoteById(id, updateQuoteBody);
   }
 
   @Delete(':id')
   deleteQuoteById(@Param('id') id: string) {
     return this.quotesService.deleteQuoteById(id);
+  }
+
+  @Post('/delete_many')
+  deleteManyQuotes(@Body() idsToDelete: string[]) {
+    return this.quotesService.deleteMenyQuotes(idsToDelete);
   }
 }

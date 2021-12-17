@@ -7,6 +7,9 @@ export class QuoteShemaDefinition {
   @Prop({ required: true })
   id: string;
 
+  @Prop()
+  _id: string;
+
   @Prop({ required: true })
   quote: string;
 
