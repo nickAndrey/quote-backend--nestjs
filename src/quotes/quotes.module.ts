@@ -7,10 +7,6 @@ import { QuoteShema, QuoteShemaDefinition } from './shemas/quote.shema';
 @Module({
   controllers: [QuotesController],
   providers: [QuotesService],
-  imports: [
-    MongooseModule.forFeature([
-      { name: QuoteShemaDefinition.name, schema: QuoteShema },
-    ]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: QuoteShemaDefinition.name, schema: QuoteShema }])],
 })
 export class QuotesModule {}
