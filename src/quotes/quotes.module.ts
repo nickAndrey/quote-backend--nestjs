@@ -1,12 +1,26 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { Module, OnModuleInit } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { QuotesController } from './quotes.controller';
 import { QuotesService } from './quotes.service';
-import { QuoteShema, QuoteShemaDefinition } from './shemas/quote.shema';
 
 @Module({
   controllers: [QuotesController],
   providers: [QuotesService],
-  imports: [MongooseModule.forFeature([{ name: QuoteShemaDefinition.name, schema: QuoteShema }])],
+  imports: [
+    ElasticsearchModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        node: configService.get('ELASTIC_SEARCH_NODE'),
+      }),
+      inject: [ConfigService],
+    }),
+  ],
 })
-export class QuotesModule {}
+export class QuotesModule implements OnModuleInit {
+  constructor(private readonly quotesService: QuotesService) {}
+
+  async onModuleInit() {
+    await this.quotesService.createIndex();
+  }
+}

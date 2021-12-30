@@ -8,32 +8,32 @@ export class QuotesController {
   constructor(private quotesService: QuotesService) {}
 
   @Get()
-  getAllQuotes() {
-    return this.quotesService.getAllQuotes();
+  async getAllQuotes() {
+    return await this.quotesService.getAllQuotes();
   }
 
   @Get(':id')
-  getQuoteById(@Param('id') id: string) {
-    return this.quotesService.getQuoteById(id);
+  async getQuoteById(@Param('id') id: string) {
+    return await this.quotesService.getQuoteById(id);
   }
 
   @Post()
-  createQuote(@Body() createQuoteBody: QuoteCreateDto) {
-    return this.quotesService.createQuote(createQuoteBody);
+  async createQuote(@Body() createQuoteBody: QuoteCreateDto) {
+    return await this.quotesService.createQuote(createQuoteBody);
   }
 
   @Put(':id')
-  updateQuoteById(@Param('id') id: string, @Body() updateQuoteBody: QuoteUpdateDto) {
-    return this.quotesService.updateQuoteById(id, updateQuoteBody);
+  async updateQuoteById(@Param('id') id: string, @Body() updateQuoteBody: QuoteUpdateDto) {
+    return await this.quotesService.updateQuoteById(id, updateQuoteBody);
   }
 
   @Delete(':id')
-  deleteQuoteById(@Param('id') id: string) {
-    return this.quotesService.deleteQuoteById(id);
+  async deleteQuoteById(@Param('id') id: string) {
+    return await this.quotesService.deleteQuoteById(id);
   }
 
   @Post('/delete_many')
-  deleteManyQuotes(@Body() idsToDelete: string[]) {
-    return this.quotesService.deleteMenyQuotes(idsToDelete);
+  async deleteManyQuotes(@Body() idsToDelete: string[]) {
+    return await this.quotesService.deleteManyQuotes(idsToDelete);
   }
 }
